@@ -2,12 +2,10 @@ const { SlashCommandBuilder } = require("discord.js");
 const path = require('node:path');
 const CoreApp = require("../../CoreApp");
 
-var NumberCount = 0;
-
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("register")
-        .setDescription("參加"),
+        .setName("quit")
+        .setDescription("退出遊戲"),
     async execute(interaction){
         var Name = interaction.user.globalName;
         if (CoreApp.Judge === Name) {
@@ -15,11 +13,9 @@ module.exports = {
         }
         for (let I of CoreApp.Names) {
             if(I.UserName === Name){ 
-                await interaction.reply(`重複`);
-                return;
+                CoreApp.Names = CoreApp.Names.filter((i)=>{return i !== I})
             }
         }
-        CoreApp.Names.push({UserName : Name});
-        await interaction.reply(`Registered ${Name}`);
+        await interaction.reply(`${Name}退出遊戲`);
     },
 };

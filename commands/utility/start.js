@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require("discord.js");
 const path = require('node:path');
 const CoreApp = require("../../CoreApp");
 
@@ -8,17 +8,18 @@ module.exports = {
         .setName("start")
         .setDescription("開始"),
     async execute(interaction){
-        console.clear();
         var Players = "";
         for (let I of CoreApp.Names) {
             CoreApp.CurrentCount = CoreApp.CurrentCount + 1;
             Players = Players + `${CoreApp.CurrentCount} : ${I.UserName}\n`
         }
         if (CoreApp.CurrentCount === CoreApp.Names.length) {
-            Players = Players + `Total : ${CoreApp.CurrentCount} players`
+            Players = Players + `共${CoreApp.CurrentCount}位玩家\n ${CoreApp.Judge} 是法官`
             await interaction.reply(Players);
-        }else{ await interaction.reply(' start.js:20行  錯誤')}
-        CoreApp.Names.length = 0;
-        CoreApp.CurrentCount = 0;
+        }
+        
+        CoreApp.StartGame(CoreApp.Names)
+        //CoreApp.Names.length = 0;
+        //CoreApp.CurrentCount = 0;
     },
 };

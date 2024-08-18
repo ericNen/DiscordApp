@@ -38,6 +38,7 @@ for(const Fold of CommandsFolder){
 }
 
 client.on(Events.InteractionCreate, async interaction =>{
+	//你可以在這裡用autocomplete找到interaction的所有內容
 	if (!interaction.isChatInputCommand()) return;
 	const command = interaction.client.commands.get(interaction.commandName);
 	if(!command){ console.log("Not a command");return;}

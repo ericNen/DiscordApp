@@ -8,8 +8,10 @@ module.exports = {
         .setDescription("當法官"),
     async execute(interaction){
         var Name = interaction.user.globalName;
+        var UserID = interaction.client.user.id;
         if (CoreApp.Judge == null) {
             CoreApp.Judge = Name;
+            CoreApp.JudgeID = UserID;
             for (let I of CoreApp.Names) {
                 if(I.UserName === Name){
                     CoreApp.Names = CoreApp.Names.filter((i)=>{ return i !== I})
