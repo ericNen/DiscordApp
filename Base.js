@@ -4,10 +4,11 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { constants } = require('node:buffer');
-
+const CoreApp = require('./CoreApp');
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+CoreApp.Client = client;
 
 // When the client is ready, run this code (only once).
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
@@ -22,7 +23,7 @@ client.commands = new Collection();
 
 const FolderPath = path.join(__dirname, "commands");
 const CommandsFolder = fs.readdirSync(FolderPath);
-
+//自動找指令
 for(const Fold of CommandsFolder){
 	const cmdPath = path.join(FolderPath, Fold);
 	const JsFiles = fs.readdirSync(cmdPath).filter(file => file.endsWith(".js"));
@@ -37,7 +38,9 @@ for(const Fold of CommandsFolder){
 	}
 }
 
+//接收指令
 client.on(Events.InteractionCreate, async interaction =>{
+	
 	//你可以在這裡用autocomplete找到interaction的所有內容
 	if (!interaction.isChatInputCommand()) return;
 	const command = interaction.client.commands.get(interaction.commandName);
@@ -52,5 +55,6 @@ client.on(Events.InteractionCreate, async interaction =>{
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	}
+	//需要的話用下面這一句來看interaction有什麼東西可以用
 	//console.log(interaction);
 })

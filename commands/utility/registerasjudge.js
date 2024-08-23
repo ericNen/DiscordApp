@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const path = require('node:path');
 const CoreApp = require("../../CoreApp");
 
 module.exports = {

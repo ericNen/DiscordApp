@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const path = require('node:path');
 const CoreApp = require("../../CoreApp");
-
 var NumberCount = 0;
 
 module.exports = {
